@@ -1,0 +1,66 @@
+﻿@page "/tab"
+@using Microsoft.Extensions.Configuration
+@inject NavigationManager MyNavigationManager
+@inject IConfiguration Configuration
+@inject IJSRuntime jsRuntime
+@inject E1Service E1
+
+<div class="row justify-content-center">
+    <div class="col-auto">
+        @if (Profile is null)
+        {
+            <div>Fetching data...</div>
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">@UserName</h3>
+                </div>
+                <div class="card-body">
+                    <FormField StringField="@Profile.z_ENDYOW_161"/>
+                    <FormField StringField="@Profile.z_HMCU_34"/>
+                    <FormField DateField="@Profile.z_DST_46"/>
+                    <FormField IntField="@Profile.z_ANPA_48"/>
+                    <FormField DateField="@Profile.z_LSRD_243"/>
+                    <FormField DateField="@Profile.z_NSRD_245"/>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+@code {
+    TeamsFx _teamsfx;
+    TeamsFx teamsfx => _teamsfx ??= new TeamsFx(jsRuntime);
+    string _clientId, _endpoint;
+
+    string UserName { get; set; }
+
+    W060116C.FormData Profile { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            try
+            {
+                _clientId = Configuration.GetValue<string>("CLIENT_ID");
+                _endpoint = MyNavigationManager.BaseUri;
+
+                await teamsfx.Init(_clientId, _endpoint, _endpoint);
+
+                var user = await teamsfx.GetInfoAsync();
+
+                UserName = user.DisplayName;
+
+                var rs = await E1.RequestAsync<W060116C.Response>(new W060116C.Request("7701"));
+                Profile = rs.fs_P060116_W060116C.data;
+
+                StateHasChanged();
+            }
+            catch (Exception) { }
+        }
+    }
+}

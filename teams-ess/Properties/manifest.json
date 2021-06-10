@@ -1,0 +1,58 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.9/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.9",
+  "version": "1.0.3",
+  "id": "e67b366e-ce6a-40fc-8855-e15cce3bcf9a",
+  "packageName": "io.celin.ess",
+  "developer": {
+    "name": "Bragason and Associates Pty Ltd",
+    "websiteUrl": "https://celin.io",
+    "privacyUrl": "https://celin.io/privacy",
+    "termsOfUseUrl": "https://celin.io/termsofuse"
+  },
+  "icons": {
+    "color": "../color.png",
+    "outline": "../outline.png"
+  },
+  "name": {
+    "short": "ESS",
+    "full": "Employee Self Service"
+  },
+  "description": {
+    "short": "Demo of E1 Employee Self Service.",
+    "full": "This demonstrates how E1 can be used in Teams Apps."
+  },
+  "webApplicationInfo": {
+    "id": "3dd30d76-1a30-430a-8517-53db36d7feb0",
+    "resource": "api://io-celin-teams-ess.azurewebsites.net/3dd30d76-1a30-430a-8517-53db36d7feb0"
+  },
+  "accentColor": "#FFFFFF",
+  "permissions": [
+    "identity",
+    "messageTeamMembers"
+  ],
+  "validDomains": [
+    "localhost"
+  ],
+  "configurableTabs": [
+    {
+      "configurationUrl": "https://io-celin-teams-ess.azurewebsites.net/config",
+      "canUpdateConfiguration": false,
+      "scopes": [
+        "team",
+        "groupchat"
+      ]
+    }
+  ],
+  "staticTabs": [
+    {
+      "entityId": "index",
+      "name": "Employee",
+      "contentUrl": "https://io-celin-teams-ess.azurewebsites.net/tab",
+      "websiteUrl": "https://io-celin-teams-ess.azurewebsites.net/tab",
+      "scopes": [
+        "personal"
+      ]
+    }
+  ]
+}

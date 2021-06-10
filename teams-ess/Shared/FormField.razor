@@ -1,0 +1,29 @@
+﻿<div class="row">
+    <div class="col">
+        <label class="form-label">@Title</label>
+        <div class="form-control">@Value</div>
+    </div>
+</div>
+@code {
+    [Parameter]
+    public AIS.FormField<string> StringField { get; set; }
+    [Parameter]
+    public AIS.FormField<int> IntField { get; set; }
+    [Parameter]
+    public AIS.FormField<DateTime> DateField { get; set; }
+
+    string Title => StringField is null
+        ? IntField is null
+            ? DateField is null 
+                ? "N/A"
+                : DateField.title
+            : IntField.title
+        : StringField.title;
+    string Value => StringField is null
+        ? IntField is null
+            ? DateField is null
+                ? "N/A"
+                : DateField.value.ToLongDateString()
+            : IntField.value.ToString()
+        : StringField.value;
+}
